@@ -100,7 +100,7 @@ export function ListTable() {
                   {student.attendance}
                 </TableCell>
                 <TableCell>
-                  <div className="flex gap-2 text-center flex-col">
+                  <div className="flex gap-2 text-start flex-col">
                     {Object.entries(
                       student.marks as Record<string, number>
                     ).map(([subject, marks]) => (
