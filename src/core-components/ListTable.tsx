@@ -15,10 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function ListTable() {
   const { permission } = useSelector((store: RootState) => store.loginSlice);
-  const [students, setStudents] = useState<Student[]>([]);
   const { studentData } = useSelector(
     (store: RootState) => store.studentDataSlice
   );
+  const [students, setStudents] = useState<Student[]>(studentData);
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,6 +35,12 @@ export function ListTable() {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (studentData.length) {
+      setStudents(studentData);
+    }
+  }, [studentData?.length]);
 
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
