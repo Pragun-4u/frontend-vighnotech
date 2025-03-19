@@ -19,9 +19,9 @@ export function ListTable() {
     (store: RootState) => store.studentDataSlice
   );
   const [students, setStudents] = useState<Student[]>(studentData);
-  const dispatch = useDispatch();
-
   const [currentPage, setCurrentPage] = useState(1);
+
+  const dispatch = useDispatch();
   const studentsPerPage = 5;
 
   const getData = async () => {
@@ -87,42 +87,46 @@ export function ListTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentStudents.map((student) => (
-            <TableRow key={student.id}>
-              <TableCell className="font-medium">{student.name}</TableCell>
-              <TableCell className="text-center">
-                {student.roll_number}
-              </TableCell>
-              <TableCell className="text-center">{student.class}</TableCell>
-              <TableCell className="text-center">{student.section}</TableCell>
-              <TableCell className="text-center">
-                {student.attendance}
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-2 text-center flex-col">
-                  {Object.entries(student.marks as Record<string, number>).map(
-                    ([subject, marks]) => (
+          {currentStudents.length > 0 ? (
+            currentStudents.map((student) => (
+              <TableRow key={student.id}>
+                <TableCell className="font-medium">{student.name}</TableCell>
+                <TableCell className="text-center">
+                  {student.roll_number}
+                </TableCell>
+                <TableCell className="text-center">{student.class}</TableCell>
+                <TableCell className="text-center">{student.section}</TableCell>
+                <TableCell className="text-center">
+                  {student.attendance}
+                </TableCell>
+                <TableCell>
+                  <div className="flex gap-2 text-center flex-col">
+                    {Object.entries(
+                      student.marks as Record<string, number>
+                    ).map(([subject, marks]) => (
                       <div key={subject}>
                         {subject}: {marks}
                       </div>
-                    )
-                  )}
-                </div>
-              </TableCell>
-              <TableCell>
-                {permission.length > 0 && (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleDelete(student.id)}
-                      className="bg-red-500  px-2 py-1 rounded-md"
-                    >
-                      🗑️
-                    </button>
+                    ))}
                   </div>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+                <TableCell>
+                  {permission.length > 0 && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleDelete(student.id)}
+                        className="bg-red-500  px-2 py-1 rounded-md"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <>No Data Available</>
+          )}
         </TableBody>
         {/* <TableFooter>
           <TableRow>
