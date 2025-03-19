@@ -11,7 +11,7 @@ const studentDataSlice = createSlice({
       state.studentData = action.payload;
     },
     addStudentData: (state, action) => {
-      state.studentData = [...state.studentData, action.payload];
+      state.studentData = [action.payload, ...state.studentData];
     },
   },
 });
