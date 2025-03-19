@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,8 +16,9 @@ import { addStudentData } from "@/store/features/studentDataSlice";
 
 export function DialogDemo() {
   const formRef = useRef<HTMLFormElement>(null);
+  const [open, setOpen] = useState(false); // Control dialog open state
+
   const dispatch = useDispatch();
-  // Handle form submission
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -37,12 +38,13 @@ export function DialogDemo() {
         id: Math.floor(Math.random() * 10000),
       };
       dispatch(addStudentData(data));
-      console.log("Form Data:", data);
+
+      setOpen(false);
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Add</Button>
       </DialogTrigger>
